@@ -12,9 +12,15 @@ def get_callback_handler() -> Any | None:
     if not public_key or not secret_key:
         return None
 
+    from langfuse import Langfuse
     from langfuse.langchain import CallbackHandler
 
-    # secret_key and host are read from LANGFUSE_SECRET_KEY / LANGFUSE_HOST env vars
+    # Initialize global client so CallbackHandler can find it
+    Langfuse(
+        public_key=public_key,
+        secret_key=secret_key,
+        host=os.getenv("LANGFUSE_HOST", "https://cloud.langfuse.com"),
+    )
     return CallbackHandler(public_key=public_key)
 
 
