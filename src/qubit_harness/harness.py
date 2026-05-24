@@ -76,7 +76,10 @@ class CalibrationHarness:
                     parameter="budget",
                     value=float(self._used),
                     bound=float(self._budget),
-                    message=f"Session budget exhausted ({self._used}/{self._budget} measurements used)",
+                    message=(
+                        f"Session budget exhausted "
+                        f"({self._used}/{self._budget} measurements used)"
+                    ),
                 )
             )
 
@@ -90,7 +93,10 @@ class CalibrationHarness:
                     parameter="rate",
                     value=elapsed,
                     bound=_RATE_LIMIT_SECONDS,
-                    message=f"Rate limit: {elapsed*1000:.1f}ms since last measurement, minimum {_RATE_LIMIT_SECONDS*1000:.0f}ms required",
+                    message=(
+                        f"Rate limit: {elapsed*1000:.1f}ms since last measurement, "
+                        f"minimum {_RATE_LIMIT_SECONDS*1000:.0f}ms required"
+                    ),
                 )
             )
 

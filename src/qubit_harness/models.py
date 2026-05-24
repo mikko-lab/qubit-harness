@@ -1,6 +1,6 @@
 """Typed I/O models for all tool boundaries."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
 from pydantic import BaseModel, Field, field_validator, model_validator
@@ -15,7 +15,7 @@ class MeasurementResult(BaseModel):
     measurement_id: str = Field(default_factory=lambda: str(uuid4()))
     amplitude: float = Field(..., ge=0.0, le=1.0)
     fidelity: float = Field(..., ge=0.0, le=1.0)
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class CalibrationState(BaseModel):

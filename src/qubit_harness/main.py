@@ -62,7 +62,7 @@ def main() -> None:
     print()
 
     try:
-        final_state: AgentState = graph.invoke(initial_state, config=run_config)  # type: ignore[assignment]
+        final_state: AgentState = graph.invoke(initial_state, config=run_config)  # type: ignore[call-overload]
     except Exception as exc:
         print(f"Error during calibration: {exc}", file=sys.stderr)
         sys.exit(1)

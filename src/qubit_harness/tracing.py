@@ -14,11 +14,8 @@ def get_callback_handler() -> Any | None:
 
     from langfuse.langchain import CallbackHandler
 
-    return CallbackHandler(
-        public_key=public_key,
-        secret_key=secret_key,
-        host=os.getenv("LANGFUSE_HOST", "https://cloud.langfuse.com"),
-    )
+    # secret_key and host are read from LANGFUSE_SECRET_KEY / LANGFUSE_HOST env vars
+    return CallbackHandler(public_key=public_key)
 
 
 def make_run_config(session_id: str, trace_enabled: bool) -> dict[str, Any]:

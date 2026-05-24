@@ -9,6 +9,7 @@ from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, System
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, StateGraph
 from langgraph.graph.message import add_messages
+from langgraph.graph.state import CompiledStateGraph
 
 from qubit_harness.harness import CalibrationHarness
 from qubit_harness.models import MeasurementResult
@@ -80,9 +81,9 @@ def _parse_response(text: str) -> tuple[bool, float | None, str | None]:
 def build_graph(
     harness: CalibrationHarness,
     model: str | None = None,
-) -> object:
+) -> CompiledStateGraph:  # type: ignore[type-arg]
     """Build and compile the calibration StateGraph."""
-    llm = ChatAnthropic(
+    llm = ChatAnthropic(  # type: ignore[call-arg]
         model=model or os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-6"),
         max_tokens=256,
     )
@@ -120,7 +121,7 @@ def build_graph(
             return END  # type: ignore[return-value]
         return "propose_parameter"
 
-    graph: StateGraph = StateGraph(AgentState)
+    graph: StateGraph[AgentState] = StateGraph(AgentState)
     graph.add_node("propose_parameter", propose_parameter)
     graph.add_node("execute_measurement", execute_measurement)
     graph.add_node("analyze_result", analyze_result)
