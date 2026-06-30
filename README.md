@@ -1,5 +1,8 @@
 # qubit-harness
 
+[![CI](https://github.com/mikko-lab/qubit-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/mikko-lab/qubit-harness/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A LangGraph-based agentic harness that calibrates a simulated qubit. Built as a portfolio demo for agentic systems work — the same closed-loop pattern applies to real hardware.
 
 ## Architecture
