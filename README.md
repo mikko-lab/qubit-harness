@@ -54,6 +54,8 @@ uv run python -m qubit_harness.main --budget 10 --no-trace
 uv run python -m qubit_harness.main --budget 5 --seed 42
 ```
 
+`--seed` pins the simulator's measurement noise: the same seed gives the same noise draw for a given amplitude sequence. It does not make a full run deterministic — the agent's amplitude proposals come from the LLM and remain non-deterministic.
+
 Example output:
 
 ```

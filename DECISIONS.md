@@ -24,3 +24,7 @@ Pydantic v2 gives runtime validation (not just type hints), JSON serialisation, 
 
 `_TRUE_OPTIMUM = 0.73` is module-private. Tests verify statistical behaviour (optimum beats edges by >0.3 average fidelity) rather than asserting the exact value. This prevents tests from accidentally leaking the answer to the agent layer.
 
+## 2026-07-04 — `--seed` reproduces measurement noise, not full-run determinism
+
+`execute_measurement` parsed `args.seed` into `main.py` but never threaded it into `run_measurement()`, so every measurement's noise was drawn from OS entropy regardless of `--seed`. Fixed by deriving `call_seed = base_seed + len(history)` per measurement, giving each call in a run a distinct but reproducible seed. This only pins the simulator's noise draw — the agent's amplitude proposals are LLM-generated and remain non-deterministic, so `--seed` reproduces measurement noise for a given amplitude sequence, not the full run end-to-end.
+
