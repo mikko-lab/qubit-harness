@@ -43,6 +43,7 @@ class AgentState(TypedDict):
     current_amplitude: float | None
     current_reason: str | None
     converged: bool
+    seed: int | None
 
 
 def _format_history(history: list[MeasurementResult], budget_remaining: int) -> str:
@@ -104,7 +105,11 @@ def build_graph(
     def execute_measurement(state: AgentState) -> dict:  # type: ignore[type-arg]
         if state["converged"] or state["current_amplitude"] is None:
             return {}
-        result = run_measurement(harness, state["current_amplitude"], state["current_reason"])
+        base_seed = state.get("seed")
+        call_seed = None if base_seed is None else base_seed + len(state["history"])
+        result = run_measurement(
+            harness, state["current_amplitude"], state["current_reason"], seed=call_seed
+        )
         return {
             "history": state["history"] + [result],
             "budget_remaining": state["budget_remaining"] - 1,

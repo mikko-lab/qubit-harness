@@ -54,6 +54,7 @@ def main() -> None:
         "current_amplitude": None,
         "current_reason": None,
         "converged": False,
+        "seed": args.seed,
     }
 
     run_config = make_run_config(session_id, trace_enabled)
